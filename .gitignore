@@ -15,6 +15,7 @@ dist/
 backend/dist/
 frontend/dist/
 build/
+frontend/.vite/
 
 # Logs
 logs/
@@ -23,6 +24,7 @@ npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 
 # Editor directories and files
 .vscode/*
