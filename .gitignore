@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment variables
+.env
+backend/.env
+frontend/.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+backend/dist/
+frontend/dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Database (SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Coverage
+coverage/
+*.lcov
+
+# Testing
+.nyc_output/
+
+# Cache
+.cache/
+.parcel-cache/
