@@ -1,6 +1,6 @@
 'use strict';
 
-const { Registro, Partida, Oficio, Proyecto } = require('../models');
+const { Registro, Partida, Oficio, Proyecto, Configuracion } = require('../models');
 const { Op } = require('sequelize');
 
 /**
@@ -71,9 +71,10 @@ async function calcularRentabilidad(proyectoId) {
     ? ((rentabilidad / presupuesto) * 100).toFixed(1)
     : 0;
 
-  // Lo que deberías haber cobrado con un margen del 30%
-  const MARGEN_SUGERIDO = 0.30;
-  const valorSugerido   = costoRealTotal * (1 + MARGEN_SUGERIDO);
+  // Margen sugerido desde configuración (default 30%)
+  const cfg = await Configuracion.findByPk(1);
+  const margen = cfg ? parseFloat(cfg.margenSugerido) / 100 : 0.30;
+  const valorSugerido = costoRealTotal * (1 + margen);
 
   // Avance HH
   const avanceHH = hhPresupuestadas > 0

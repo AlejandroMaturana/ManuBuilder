@@ -29,6 +29,19 @@ export const getRentabilidad = (id)         => req('GET',  `/proyectos/${id}/ren
 export const getPartidas     = (id)         => req('GET',  `/proyectos/${id}/partidas`);
 export const createPartida   = (id, data)   => req('POST', `/proyectos/${id}/partidas`, data);
 
+// ── Cotizaciones ──────────────────────────────────────────────
+export const getCotizaciones     = ()           => req('GET',  '/cotizaciones');
+export const getCotizacion       = (id)         => req('GET',  `/cotizaciones/${id}`);
+export const createCotizacion    = (data)       => req('POST', '/cotizaciones', data);
+export const updateCotizacion    = (id, data)   => req('PUT',  `/cotizaciones/${id}`, data);
+export const deleteCotizacion    = (id)         => req('DELETE',`/cotizaciones/${id}`);
+export const aprobarCotizacion   = (id)         => req('POST', `/cotizaciones/${id}/aprobar`);
+export const cambiarEstadoCotizacion = (id, estado) => req('PUT', `/cotizaciones/${id}/estado`, { estado });
+
+// ── Configuracion ──────────────────────────────────────────────
+export const getConfiguracion    = ()           => req('GET',  '/configuracion');
+export const updateConfiguracion = (data)       => req('PUT',  '/configuracion', data);
+
 // ── Oficios ───────────────────────────────────────────────────
 export const getOficios     = ()           => req('GET',  '/oficios');
 
