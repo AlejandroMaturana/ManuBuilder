@@ -1,17 +1,21 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
 const NAV = [
-  { to: '/',           icon: '📊', label: 'Dashboard'  },
-  { to: '/proyectos',  icon: '🏗️', label: 'Proyectos'  },
-  { to: '/clientes',   icon: '👥', label: 'Clientes'   },
-  { to: '/stock',      icon: '📦', label: 'Stock'      },
+  { to: '/',              icon: '📊', label: 'Dashboard'  },
+  { to: '/proyectos',     icon: '🏗️', label: 'Proyectos'  },
+  { to: '/cotizaciones',  icon: '📄', label: 'Cotizar'    },
+  { to: '/clientes',      icon: '👥', label: 'Clientes'   },
+  { to: '/stock',         icon: '📦', label: 'Stock'      },
+  { to: '/configuracion', icon: '⚙️', label: 'Configuración'    },
 ];
 
 const TITLES = {
-  '/':          'Dashboard',
-  '/proyectos': 'Proyectos',
-  '/clientes':  'Clientes',
-  '/stock':     'Stock',
+  '/':              'Dashboard',
+  '/proyectos':     'Proyectos',
+  '/cotizaciones':  'Cotizaciones',
+  '/clientes':      'Clientes',
+  '/stock':         'Stock',
+  '/configuracion': 'Configuración',
 };
 
 export default function Layout({ children }) {
