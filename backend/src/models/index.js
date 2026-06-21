@@ -22,6 +22,9 @@ db.Proyecto = require('./Proyecto')(sequelize);
 db.Partida  = require('./Partida')(sequelize);
 db.Stock    = require('./Stock')(sequelize);
 db.Registro = require('./Registro')(sequelize);
+db.Configuracion    = require('./Configuracion')(sequelize);
+db.Cotizacion       = require('./Cotizacion')(sequelize);
+db.CotizacionItem   = require('./CotizacionItem')(sequelize);
 
 // Asociaciones
 Object.values(db).forEach((model) => {
