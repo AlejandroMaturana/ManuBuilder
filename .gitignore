@@ -20,6 +20,7 @@ frontend/.vite/
 # Logs
 logs/
 *.log
+*.err
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
