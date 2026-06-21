@@ -27,8 +27,11 @@ yarn-error.log*
 lerna-debug.log*
 
 # Editor directories and files
+.agents/
+.examples/
 .vscode/*
 !.vscode/extensions.json
+skills-lock.json
 .idea/
 .DS_Store
 *.suo
