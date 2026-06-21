@@ -1,7 +1,8 @@
 'use strict';
 const router = require('express').Router();
 const { Op, fn, col, literal } = require('sequelize');
-const { Cotizacion, CotizacionItem, Proyecto, Partida, Cliente, sequelize } = require('../models');
+const { Cotizacion, CotizacionItem, Proyecto, Partida, Cliente, Configuracion, sequelize } = require('../models');
+const { generarPDF } = require('../services/pdf-html.service');
 
 // ── Generar correlativo ─────────────────────────────────────────
 async function generarCorrelativo() {
@@ -107,6 +108,26 @@ router.put('/:id', async (req, res, next) => {
       include: [{ model: CotizacionItem, as: 'items', order: [['orden', 'ASC']] }],
     });
     res.json(result);
+  } catch (e) { next(e); }
+});
+
+// ── GET /api/cotizaciones/:id/pdf ────────────────────────────────
+router.get('/:id/pdf', async (req, res, next) => {
+  try {
+    const cotizacion = await Cotizacion.findByPk(req.params.id, {
+      include: [{ model: CotizacionItem, as: 'items', order: [['orden', 'ASC']] }],
+    });
+    if (!cotizacion) return res.status(404).json({ error: 'No encontrada' });
+
+    const config = await Configuracion.findByPk(1);
+    const pdf = await generarPDF(cotizacion.toJSON(), config?.toJSON() || null);
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `inline; filename="${cotizacion.correlativo}.pdf"`,
+      'Content-Length': pdf.length,
+    });
+    res.send(pdf);
   } catch (e) { next(e); }
 });
 

@@ -20,6 +20,7 @@ frontend/.vite/
 # Logs
 logs/
 *.log
+*.err
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
@@ -27,8 +28,11 @@ yarn-error.log*
 lerna-debug.log*
 
 # Editor directories and files
+.agents/
+.examples/
 .vscode/*
 !.vscode/extensions.json
+skills-lock.json
 .idea/
 .DS_Store
 *.suo

@@ -207,6 +207,9 @@ export default function CotizacionForm() {
             <button className="btn btn-danger" onClick={() => handleEstado('rechazada')}>✕ Rechazar</button>
           )}
           {!isNew && (
+            <button className="btn btn-primary" onClick={() => window.open(`/api/cotizaciones/${id}/pdf`, '_blank')}>📄 PDF</button>
+          )}
+          {!isNew && (
             <button className="btn btn-danger" onClick={() => setDeleteConfirm(true)}>🗑</button>
           )}
         </div>

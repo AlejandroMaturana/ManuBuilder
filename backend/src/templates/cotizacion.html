@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:        #1A1A1A;
+    --ink-mid:    #4A4A4A;
+    --ink-soft:   #888;
+    --rule:       #D4D0C8;
+    --accent:     #2B4C3F;
+    --accent-lt:  #EAF0ED;
+    --paper:      #FAFAF8;
+    --white:      #FFFFFF;
+    --mono:       'DM Mono', monospace;
+    --sans:       'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: #fff;
+    padding: 0;
+    margin: 0;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--white);
+    padding: 14.8mm 16.9mm 16.9mm;
+    position: relative;
+  }
+
+  .sheet::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent);
+  }
+
+  .doc-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .brand-contact {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .brand-contact span {
+    font-size: 12px;
+    color: var(--ink-mid);
+  }
+
+  .doc-meta { text-align: right; }
+
+  .doc-type {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .doc-number {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    margin-top: 4px;
+  }
+
+  .doc-dates {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-end;
+  }
+
+  .doc-dates span {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .doc-dates strong {
+    color: var(--ink-mid);
+    font-weight: 500;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .client-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+
+  .client-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .client-detail {
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  .obra-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 28px;
+  }
+
+  thead tr {
+    background: var(--accent-lt);
+    border-top: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+
+  thead th {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 8px 10px;
+    text-align: left;
+  }
+
+  thead th.r { text-align: right; }
+
+  tbody tr { border-bottom: 1px solid var(--rule); }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody td {
+    font-size: 12.5px;
+    color: var(--ink);
+    padding: 9px 10px;
+    vertical-align: top;
+  }
+
+  tbody td.num {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: right;
+    color: var(--ink-mid);
+  }
+
+  tbody td.total-col {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: right;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .item-desc {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .summary-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 28px;
+  }
+
+  .summary-box {
+    width: 280px;
+    border: 1px solid var(--rule);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 12.5px;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+
+  .summary-row .label { color: var(--ink-mid); }
+
+  .summary-row .val {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+  }
+
+  .summary-row.total-row {
+    background: var(--accent);
+  }
+
+  .summary-row.total-row .label {
+    color: #fff;
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  .summary-row.total-row .val {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .conditions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+
+  .cond-val {
+    font-size: 13px;
+    color: var(--ink);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .exclusion-list {
+    font-size: 12px;
+    color: var(--ink-mid);
+    margin-top: 4px;
+    line-height: 1.7;
+    list-style: none;
+  }
+
+  .exclusion-list li::before {
+    content: '— ';
+    color: var(--ink-soft);
+  }
+
+  .sign-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .validity {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .sign-block { text-align: right; }
+
+  .sign-line {
+    width: 160px;
+    border-bottom: 1px solid var(--ink);
+    margin-left: auto;
+    margin-bottom: 6px;
+  }
+
+  .sign-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .sign-role {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .doc-footer {
+    margin-top: 36px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-contact {
+    font-size: 11px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 20px;
+  }
+
+  .doc-folio {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--rule);
+    letter-spacing: .08em;
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- Cabecera -->
+  <div class="doc-head">
+    <div>
+      <div class="brand-name">{{BRAND_NAME}}</div>
+      <div class="brand-tag">{{BRAND_TAG}}</div>
+      <div class="brand-contact">
+        {{BRAND_CONTACT}}
+      </div>
+    </div>
+    <div class="doc-meta">
+      <div class="doc-type">Cotización</div>
+      <div class="doc-number">{{CORRELATIVO}}</div>
+      <div class="doc-dates">
+        <span>Emisión: <strong>{{FECHA_EMISION}}</strong></span>
+        <span>Válida hasta: <strong>{{FECHA_VENCIMIENTO}}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cliente + Obra -->
+  <div class="client-block">
+    <div>
+      <div class="section-label">Cliente</div>
+      <div class="client-name">{{CLIENTE_NOMBRE}}</div>
+      <div class="client-detail">
+        {{CLIENTE_DETALLE}}
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Descripción de la obra</div>
+      <div class="obra-desc">{{DESCRIPCION_OBRA}}</div>
+    </div>
+  </div>
+
+  <!-- Partidas — Mano de obra -->
+  <div class="section-title">Mano de obra</div>
+  {{ITEMS_MO_TABLE}}
+
+  <!-- Materiales -->
+  <div class="section-title">Materiales (suministro propio)</div>
+  {{ITEMS_MATERIALES_TABLE}}
+
+  <!-- Resumen -->
+  <div class="summary-wrap">
+    <div class="summary-box">
+      <div class="summary-row">
+        <span class="label">Subtotal mano de obra</span>
+        <span class="val">{{SUBTOTAL_MO}}</span>
+      </div>
+      <div class="summary-row">
+        <span class="label">Subtotal materiales</span>
+        <span class="val">{{SUBTOTAL_MATERIALES}}</span>
+      </div>
+      <div class="summary-row total-row">
+        <span class="label">Total cotización</span>
+        <span class="val">{{TOTAL}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Condiciones -->
+  <div class="conditions">
+    <div class="cond-item">
+      <div class="section-label">Forma de pago</div>
+      <div class="cond-val">{{CONDICIONES_PAGO}}</div>
+    </div>
+    <div class="cond-item">
+      <div class="section-label">Plazo estimado</div>
+      <div class="cond-val">{{VALIDEZ_DIAS}} días hábiles desde recepción de anticipo</div>
+    </div>
+    <div class="cond-item">
+      <div class="section-label">Exclusiones</div>
+      <ul class="exclusion-list">{{EXCLUSIONES}}</ul>
+    </div>
+    <div class="cond-item">
+      <div class="section-label">Observaciones</div>
+      <div class="cond-val" style="font-size:12px;color:#666;">{{OBSERVACIONES}}</div>
+    </div>
+  </div>
+
+  <!-- Firma -->
+  <div class="sign-row">
+    <div class="validity">Validez: {{VALIDEZ_DIAS}} días corridos desde fecha de emisión.</div>
+    <div class="sign-block">
+      <div class="sign-line"></div>
+      <div class="sign-name">{{SIGN_NAME}}</div>
+      <div class="sign-role">{{SIGN_ROLE}}</div>
+    </div>
+  </div>
+
+  <!-- Pie -->
+  <div class="doc-footer">
+    <div class="footer-contact">
+      {{FOOTER_CONTACT}}
+    </div>
+    <div class="doc-folio">{{CORRELATIVO}}</div>
+  </div>
+
+</div>
+
+</body>
+</html>
