@@ -785,6 +785,114 @@ tr:hover td { background: var(--bg-card-hover); }
   .rr-grid { grid-template-columns: 1fr 1fr; }
 }
 
+/* ── Tarjeta de Jornada ────────────────────────────────────── */
+.tj-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.tj-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tj-header .section-title { margin-bottom: 0; }
+
+.tj-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tj-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: border-color var(--transition);
+}
+
+.tj-block:hover { border-color: var(--border-hover); }
+
+.tj-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.tj-block-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.tj-oficio-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.tj-block-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 0.7fr 1fr 0.8fr;
+  gap: 10px;
+  align-items: end;
+}
+
+@media (max-width: 900px) {
+  .tj-block-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.tj-block-total {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green);
+  display: block;
+  padding-bottom: 10px;
+}
+
+.tj-summary {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.tj-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tj-summary-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tj-summary-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 /* ── Recharts override ─────────────────────────────────────── */
 .recharts-tooltip-wrapper .recharts-default-tooltip {
   background: var(--bg-card) !important;

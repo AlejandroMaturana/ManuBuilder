@@ -7,6 +7,7 @@ import {
 } from '../api';
 import KpiCard from '../components/KpiCard';
 import RegistroRapido from '../components/RegistroRapido';
+import TarjetaJornada from '../components/TarjetaJornada';
 import Modal from '../components/Modal';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend
@@ -38,6 +39,9 @@ export default function ProyectoDetalle() {
   const [editRegistro, setEditRegistro] = useState(null);
   const [rForm, setRForm] = useState({ tipo: 'hh', descripcion: '', cantidad: '', unidad: 'hr', costoUnitario: '', fecha: '', partidaId: '' });
   const [rSaving, setRSaving] = useState(false);
+
+  // Toggle modo registro: 'rapido' | 'jornada'
+  const [modoRegistro, setModoRegistro] = useState('rapido');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -197,7 +201,18 @@ export default function ProyectoDetalle() {
       {/* ─── TAB RESUMEN ─── */}
       {tab === 'resumen' && (
         <>
-          <RegistroRapido proyectoId={id} partidas={partidas} onSuccess={load} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>Registro:</span>
+            <div className="tabs" style={{ marginBottom: 0 }}>
+              <button className={`tab ${modoRegistro === 'rapido' ? 'active' : ''}`} onClick={() => setModoRegistro('rapido')}>⚡ Captura Rápida</button>
+              <button className={`tab ${modoRegistro === 'jornada' ? 'active' : ''}`} onClick={() => setModoRegistro('jornada')}>📋 Tarjeta de Jornada</button>
+            </div>
+          </div>
+          {modoRegistro === 'rapido' ? (
+            <RegistroRapido proyectoId={id} partidas={partidas} onSuccess={load} />
+          ) : (
+            <TarjetaJornada proyectoId={id} partidas={partidas} onSuccess={load} />
+          )}
 
           {rentabilidad && pieData.length > 0 && (
             <div className="card" style={{ marginTop: 20 }}>
@@ -229,8 +244,19 @@ export default function ProyectoDetalle() {
       {/* ─── TAB REGISTROS ─── */}
       {tab === 'registros' && (
         <>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>Registro:</span>
+            <div className="tabs" style={{ marginBottom: 0 }}>
+              <button className={`tab ${modoRegistro === 'rapido' ? 'active' : ''}`} onClick={() => setModoRegistro('rapido')}>⚡ Captura Rápida</button>
+              <button className={`tab ${modoRegistro === 'jornada' ? 'active' : ''}`} onClick={() => setModoRegistro('jornada')}>📋 Tarjeta de Jornada</button>
+            </div>
+          </div>
           <div style={{ marginBottom: 16 }}>
-            <RegistroRapido proyectoId={id} partidas={partidas} onSuccess={load} />
+            {modoRegistro === 'rapido' ? (
+              <RegistroRapido proyectoId={id} partidas={partidas} onSuccess={load} />
+            ) : (
+              <TarjetaJornada proyectoId={id} partidas={partidas} onSuccess={load} />
+            )}
           </div>
           {registros.length === 0 ? (
             <div className="empty-state"><div className="empty-icon">📋</div><p>Sin registros aún.</p></div>

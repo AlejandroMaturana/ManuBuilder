@@ -54,6 +54,7 @@ export const getRegistros    = (params = {})=> req('GET',  '/registros?' + new U
 export const createRegistro  = (data)       => req('POST', '/registros', data);
 export const updateRegistro  = (id, data)   => req('PUT',  `/registros/${id}`, data);
 export const deleteRegistro  = (id)         => req('DELETE',`/registros/${id}`);
+export const createJornada   = (data)       => req('POST', '/registros/jornada', data);
 
 // ── Stock ─────────────────────────────────────────────────────
 export const getStock        = ()           => req('GET',  '/stock');
