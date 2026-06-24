@@ -62,4 +62,37 @@ router.delete('/:id', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
+// POST /api/registros/jornada  ← tarjeta de jornada (multi-bloque HH)
+router.post('/jornada', async (req, res, next) => {
+  try {
+    const { proyectoId, fecha, bloques } = req.body;
+    if (!proyectoId || !bloques || !Array.isArray(bloques) || bloques.length === 0) {
+      return res.status(400).json({ error: 'proyectoId y bloques[] requeridos' });
+    }
+
+    const fechaJornada = fecha || new Date().toISOString().split('T')[0];
+    const sequelize = Registro.sequelize;
+
+    const creados = await sequelize.transaction(async (t) => {
+      const results = [];
+      for (const b of bloques) {
+        const r = await Registro.create({
+          proyectoId,
+          partidaId: b.partidaId || null,
+          tipo: 'hh',
+          descripcion: b.descripcion,
+          cantidad: parseFloat(b.cantidad) || 0,
+          unidad: 'hr',
+          costoUnitario: parseFloat(b.costoUnitario) || 0,
+          fecha: fechaJornada,
+        }, { transaction: t });
+        results.push(r);
+      }
+      return results;
+    });
+
+    res.status(201).json(creados);
+  } catch (e) { next(e); }
+});
+
 module.exports = router;
