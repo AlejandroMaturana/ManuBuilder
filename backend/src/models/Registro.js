@@ -32,7 +32,9 @@ module.exports = (sequelize) => {
     hooks: {
       // Calcula costoTotal automáticamente antes de guardar
       beforeSave(registro) {
-        registro.costoTotal = parseFloat(registro.cantidad) * parseFloat(registro.costoUnitario);
+        const cant = parseFloat(registro.cantidad) || 0;
+        const cUnit = parseFloat(registro.costoUnitario) || 0;
+        registro.costoTotal = cant * cUnit;
       },
     },
   });

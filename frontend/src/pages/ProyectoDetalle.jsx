@@ -26,6 +26,7 @@ export default function ProyectoDetalle() {
   const [oficios,       setOficios]       = useState([]);
   const [tab,           setTab]           = useState('resumen');
   const [loading,       setLoading]       = useState(true);
+  const [loadError,     setLoadError]     = useState(null);
 
   // Modal nueva partida
   const [modalPartida, setModalPartida] = useState(false);
@@ -45,49 +46,61 @@ export default function ProyectoDetalle() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [p, r, regs, parts, offs] = await Promise.all([
-      getProyecto(id),
-      getRentabilidad(id).catch(() => null),
-      getRegistros({ proyectoId: id }),
-      getPartidas(id),
-      getOficios(),
-    ]);
-    setProyecto(p);
-    setRentabilidad(r);
-    setRegistros(regs);
-    setPartidas(parts);
-    setOficios(offs);
-    setLoading(false);
+    setLoadError(null);
+    try {
+      const [p, r, regs, parts, offs] = await Promise.all([
+        getProyecto(id),
+        getRentabilidad(id).catch(() => null),
+        getRegistros({ proyectoId: id }),
+        getPartidas(id),
+        getOficios(),
+      ]);
+      setProyecto(p);
+      setRentabilidad(r);
+      setRegistros(regs);
+      setPartidas(parts);
+      setOficios(offs);
+    } catch (err) {
+      setLoadError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }, [id]);
 
   useEffect(() => { load(); }, [load]);
 
   async function handleDeleteRegistro(regId) {
     if (!confirm('¿Eliminar este registro?')) return;
-    await deleteRegistro(regId);
-    load();
+    try {
+      await deleteRegistro(regId);
+      load();
+    } catch (err) { setLoadError(err.message); }
   }
 
   async function handleDeletePartida(pId) {
     if (!confirm('¿Eliminar esta partida?')) return;
-    await deletePartida(pId);
-    load();
+    try {
+      await deletePartida(pId);
+      load();
+    } catch (err) { setLoadError(err.message); }
   }
 
   async function handleSavePartida() {
     if (!pForm.nombre.trim()) return;
     setPSaving(true);
-    const data = { ...pForm, hhPresupuestadas: parseFloat(pForm.hhPresupuestadas) || 0, costoPresupuestado: parseFloat(pForm.costoPresupuestado) || 0, orden: parseInt(pForm.orden) || 0, oficioId: pForm.oficioId || null };
-    if (editingPartida) {
-      await updatePartida(editingPartida.id, data);
-    } else {
-      await createPartida(id, data);
-    }
-    setModalPartida(false);
-    setEditingPartida(null);
-    setPForm({ nombre: '', hhPresupuestadas: '', costoPresupuestado: '', orden: '', oficioId: '' });
-    setPSaving(false);
-    load();
+    try {
+      const data = { ...pForm, hhPresupuestadas: parseFloat(pForm.hhPresupuestadas) || 0, costoPresupuestado: parseFloat(pForm.costoPresupuestado) || 0, orden: parseInt(pForm.orden) || 0, oficioId: pForm.oficioId || null };
+      if (editingPartida) {
+        await updatePartida(editingPartida.id, data);
+      } else {
+        await createPartida(id, data);
+      }
+      setModalPartida(false);
+      setEditingPartida(null);
+      setPForm({ nombre: '', hhPresupuestadas: '', costoPresupuestado: '', orden: '', oficioId: '' });
+      load();
+    } catch (err) { setLoadError(err.message); }
+    finally { setPSaving(false); }
   }
 
   function handleEditPartida(p) {
@@ -118,20 +131,23 @@ export default function ProyectoDetalle() {
   async function handleUpdateRegistro() {
     if (!rForm.descripcion || !rForm.cantidad) return;
     setRSaving(true);
-    await updateRegistro(editRegistro.id, {
-      ...rForm,
-      proyectoId: id,
-      costoTotal: (parseFloat(rForm.cantidad) || 0) * (parseFloat(rForm.costoUnitario) || 0),
-      cantidad: parseFloat(rForm.cantidad),
-      costoUnitario: parseFloat(rForm.costoUnitario) || 0,
-    });
-    setEditRegistro(null);
-    setRForm({ tipo: 'hh', descripcion: '', cantidad: '', unidad: 'hr', costoUnitario: '', fecha: '', partidaId: '' });
-    setRSaving(false);
-    load();
+    try {
+      await updateRegistro(editRegistro.id, {
+        ...rForm,
+        proyectoId: id,
+        costoTotal: (parseFloat(rForm.cantidad) || 0) * (parseFloat(rForm.costoUnitario) || 0),
+        cantidad: parseFloat(rForm.cantidad),
+        costoUnitario: parseFloat(rForm.costoUnitario) || 0,
+      });
+      setEditRegistro(null);
+      setRForm({ tipo: 'hh', descripcion: '', cantidad: '', unidad: 'hr', costoUnitario: '', fecha: '', partidaId: '' });
+      load();
+    } catch (err) { setLoadError(err.message); }
+    finally { setRSaving(false); }
   }
 
   if (loading) return <div className="loading-center"><div className="spinner" /></div>;
+  if (loadError) return <div className="empty-state"><p style={{ color: 'var(--red)' }}>⚠ Error al cargar: {loadError}</p><button className="btn btn-primary" onClick={load} style={{ marginTop: 12 }}>Reintentar</button></div>;
   if (!proyecto) return <div className="empty-state"><p>Proyecto no encontrado.</p></div>;
 
   const color = rentabilidad ? colorMargen(rentabilidad.indicadores.margenPct) : 'blue';

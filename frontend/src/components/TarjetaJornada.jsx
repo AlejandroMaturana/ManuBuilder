@@ -12,6 +12,7 @@ export default function TarjetaJornada({ proyectoId, partidas = [], onSuccess })
 
   function updateBloque(i, field, value) {
     setBloques(prev => {
+      if (i < 0 || i >= prev.length) return prev;
       const copy = prev.map(b => ({ ...b }));
       copy[i][field] = value;
 
@@ -29,8 +30,10 @@ export default function TarjetaJornada({ proyectoId, partidas = [], onSuccess })
   }
 
   function removeBloque(i) {
-    if (bloques.length <= 1) return;
-    setBloques(prev => prev.filter((_, idx) => idx !== i));
+    setBloques(prev => {
+      if (prev.length <= 1) return prev;
+      return prev.filter((_, idx) => idx !== i);
+    });
   }
 
   const totalHoras = bloques.reduce((s, b) => s + (parseFloat(b.cantidad) || 0), 0);
