@@ -99,6 +99,7 @@ async function generarPDF(cotizacion, config) {
     .replace(/\{\{EXCLUSIONES\}\}/g,         renderExclusionList(cotizacion.exclusiones))
     .replace(/\{\{OBSERVACIONES\}\}/g,       esc(cotizacion.observaciones || '—'))
     .replace(/\{\{VALIDEZ_DIAS\}\}/g,        cotizacion.validezDias || '30')
+    .replace(/\{\{DECORRIDO\}\}/g,        cotizacion.deCorrido || '7')
     .replace(/\{\{SIGN_NAME\}\}/g,           esc(config?.nombre || '—'))
     .replace(/\{\{SIGN_ROLE\}\}/g,           esc(config?.especialidad || 'Constructor · Maestro integral'))
     .replace(/\{\{FOOTER_CONTACT\}\}/g,      footerContact);

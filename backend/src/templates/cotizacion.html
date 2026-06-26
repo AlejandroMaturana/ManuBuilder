@@ -36,7 +36,7 @@
     width: 210mm;
     min-height: 297mm;
     background: var(--white);
-    padding: 14.8mm 16.9mm 16.9mm;
+    padding: 12mm 16mm 12mm;
     position: relative;
   }
 
@@ -48,14 +48,22 @@
     background: var(--accent);
   }
 
+  /* CABECERA – brand y tag en línea */
   .doc-head {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 2rem;
     align-items: start;
-    padding-bottom: 28px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 28px;
+    margin-bottom: 10px;
+  }
+
+  .brand-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .brand-name {
@@ -71,11 +79,10 @@
     color: var(--ink-soft);
     letter-spacing: .06em;
     text-transform: uppercase;
-    margin-top: 3px;
   }
 
   .brand-contact {
-    margin-top: 10px;
+    margin-top: 6px;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -103,14 +110,14 @@
     color: var(--ink);
     line-height: 1.1;
     letter-spacing: -.02em;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .doc-dates {
-    margin-top: 8px;
+    margin-top: 6px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     align-items: flex-end;
   }
 
@@ -130,16 +137,16 @@
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .client-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    padding: 20px 0;
+    padding: 6px 0 8px;
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 28px;
+    margin-bottom: 8px;
   }
 
   .client-name {
@@ -149,7 +156,7 @@
   }
 
   .client-detail {
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--ink-mid);
     margin-top: 4px;
     line-height: 1.6;
@@ -168,13 +175,14 @@
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 10px;
+    margin-bottom: 4px;
+    margin-top: 4px;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 28px;
+    margin-bottom: 8px;
   }
 
   thead tr {
@@ -190,7 +198,7 @@
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--accent);
-    padding: 8px 10px;
+    padding: 6px 8px;
     text-align: left;
   }
 
@@ -203,7 +211,7 @@
   tbody td {
     font-size: 12.5px;
     color: var(--ink);
-    padding: 9px 10px;
+    padding: 3px 6px;
     vertical-align: top;
   }
 
@@ -225,24 +233,29 @@
   .item-desc {
     font-size: 11px;
     color: var(--ink-soft);
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
-  .summary-wrap {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 28px;
+  .bottom-two-col {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 1.5rem;
+    align-items: start;
+    margin-bottom: 8px;
+  }
+
+  .bottom-left .cond-item {
+    margin-top: 10px;
   }
 
   .summary-box {
-    width: 280px;
     border: 1px solid var(--rule);
   }
 
   .summary-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 14px;
+    padding: 5px 12px;
     border-bottom: 1px solid var(--rule);
     font-size: 12.5px;
   }
@@ -273,28 +286,41 @@
     font-weight: 500;
   }
 
-  .conditions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    padding: 20px 0;
+  .notes-section {
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 32px;
+    padding: 10px 0;
+    margin-bottom: 16px;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 6px;
+  }
+
+  .notes-item strong {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
   }
 
   .cond-val {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--ink);
-    margin-top: 4px;
+    margin-top: 3px;
     line-height: 1.5;
   }
 
   .exclusion-list {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--ink-mid);
-    margin-top: 4px;
-    line-height: 1.7;
+    margin-top: 3px;
+    line-height: 1.6;
     list-style: none;
   }
 
@@ -303,72 +329,98 @@
     color: var(--ink-soft);
   }
 
+  /* FIRMA – dos columnas */
   .sign-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-top: 4px;
   }
 
-  .validity {
+  .sign-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     font-size: 11.5px;
     color: var(--ink-soft);
+  }
+
+  .sign-left .validity {
     font-style: italic;
   }
 
-  .sign-block { text-align: right; }
+  .sign-left .folio {
+    font-family: var(--mono);
+    color: var(--ink-mid);
+    font-size: 11px;
+  }
+
+  .sign-left .thanks {
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 4px;
+  }
+
+  .sign-left .contact {
+    font-size: 11px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .sign-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 
   .sign-line {
     width: 160px;
     border-bottom: 1px solid var(--ink);
-    margin-left: auto;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+  }
+
+  .sign-name-role {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 12px;
   }
 
   .sign-name {
-    font-size: 12px;
     font-weight: 500;
     color: var(--ink);
   }
 
   .sign-role {
-    font-size: 11px;
     color: var(--ink-soft);
-    margin-top: 2px;
   }
 
-  .doc-footer {
-    margin-top: 36px;
-    padding-top: 16px;
+  /* LÍNEA FINAL DE CIERRE */
+  .closing-line {
+    margin-top: 16px;
     border-top: 1px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
   }
 
-  .footer-contact {
-    font-size: 11px;
-    color: var(--ink-soft);
-    display: flex;
-    gap: 20px;
-  }
-
-  .doc-folio {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--rule);
-    letter-spacing: .08em;
-  }
+  thead { display: table-header-group; }
+  .section-title { page-break-after: avoid; }
+  .bottom-two-col, .notes-section, .sign-row { page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
 </style>
 </head>
 <body>
 
 <div class="sheet">
 
-  <!-- Cabecera -->
+  <!-- CABECERA -->
   <div class="doc-head">
     <div>
-      <div class="brand-name">{{BRAND_NAME}}</div>
-      <div class="brand-tag">{{BRAND_TAG}}</div>
+      <div class="brand-header">
+        <span class="brand-name">{{BRAND_NAME}}</span>
+        <span class="brand-tag">{{BRAND_TAG}}</span>
+      </div>
       <div class="brand-contact">
         {{BRAND_CONTACT}}
       </div>
@@ -383,7 +435,7 @@
     </div>
   </div>
 
-  <!-- Cliente + Obra -->
+  <!-- CLIENTE + OBRA -->
   <div class="client-block">
     <div>
       <div class="section-label">Cliente</div>
@@ -398,71 +450,78 @@
     </div>
   </div>
 
-  <!-- Partidas — Mano de obra -->
+  <!-- PARTIDAS: MANO DE OBRA -->
   <div class="section-title">Mano de obra</div>
   {{ITEMS_MO_TABLE}}
 
-  <!-- Materiales -->
-  <div class="section-title">Materiales (suministro propio)</div>
+  <!-- MATERIALES -->
+  <div class="section-title">Materiales (estimación referencial)</div>
   {{ITEMS_MATERIALES_TABLE}}
 
-  <!-- Resumen -->
-  <div class="summary-wrap">
-    <div class="summary-box">
-      <div class="summary-row">
-        <span class="label">Subtotal mano de obra</span>
-        <span class="val">{{SUBTOTAL_MO}}</span>
-      </div>
-      <div class="summary-row">
-        <span class="label">Subtotal materiales</span>
-        <span class="val">{{SUBTOTAL_MATERIALES}}</span>
-      </div>
-      <div class="summary-row total-row">
-        <span class="label">Total cotización</span>
-        <span class="val">{{TOTAL}}</span>
-      </div>
-    </div>
-  </div>
+  <div class="closing-line"></div>
 
-  <!-- Condiciones -->
-  <div class="conditions">
-    <div class="cond-item">
+  <!-- RESUMEN + CONDICIONES -->
+  <div class="bottom-two-col">
+    <div class="bottom-left">
       <div class="section-label">Forma de pago</div>
       <div class="cond-val">{{CONDICIONES_PAGO}}</div>
+      <div class="cond-item">
+        <div class="section-label">Plazo estimado</div>
+        <div class="cond-val">{{DECORRIDO}} días hábiles desde recepción de anticipo</div>
+      </div>
     </div>
-    <div class="cond-item">
-      <div class="section-label">Plazo estimado</div>
-      <div class="cond-val">{{VALIDEZ_DIAS}} días hábiles desde recepción de anticipo</div>
-    </div>
-    <div class="cond-item">
-      <div class="section-label">Exclusiones</div>
-      <ul class="exclusion-list">{{EXCLUSIONES}}</ul>
-    </div>
-    <div class="cond-item">
-      <div class="section-label">Observaciones</div>
-      <div class="cond-val" style="font-size:12px;color:#666;">{{OBSERVACIONES}}</div>
+    <div class="bottom-right">
+      <div class="summary-box">
+        <div class="summary-row">
+          <span class="label">Subtotal mano de obra</span>
+          <span class="val">{{SUBTOTAL_MO}}</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Subtotal materiales (ref)</span>
+          <span class="val">{{SUBTOTAL_MATERIALES}}</span>
+        </div>
+        <div class="summary-row total-row">
+          <span class="label">Total cotización</span>
+          <span class="val">{{TOTAL}}</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Firma -->
+  <!-- NOTAS Y ALCANCES -->
+  <div class="notes-section">
+    <div class="notes-grid">
+      <div class="notes-item">
+        <strong>Exclusiones</strong>
+        <ul class="exclusion-list">{{EXCLUSIONES}}</ul>
+      </div>
+      <div class="notes-item">
+        <strong>Observaciones</strong>
+        <div class="cond-val">{{OBSERVACIONES}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRMA -->
   <div class="sign-row">
-    <div class="validity">Validez: {{VALIDEZ_DIAS}} días corridos desde fecha de emisión.</div>
-    <div class="sign-block">
-      <div class="sign-line"></div>
-      <div class="sign-name">{{SIGN_NAME}}</div>
-      <div class="sign-role">{{SIGN_ROLE}}</div>
+    <div class="sign-left">
+      <div class="folio">{{CORRELATIVO}}</div>
+      <div class="thanks">
+        Esta cotización evita el IVA
+        <span class="emoji">🤫</span>
+      </div>
+    </div>
+    <div class="sign-right">
+      <div class="sign-name-role">
+        <span class="sign-name">{{SIGN_NAME}}</span>
+        <span class="sign-role">{{SIGN_ROLE}}</span>
+      </div>
     </div>
   </div>
 
-  <!-- Pie -->
-  <div class="doc-footer">
-    <div class="footer-contact">
-      {{FOOTER_CONTACT}}
-    </div>
-    <div class="doc-folio">{{CORRELATIVO}}</div>
-  </div>
+  <!-- LÍNEA FINAL DE CIERRE -->
+  <div class="closing-line"></div>
 
 </div>
-
 </body>
 </html>
